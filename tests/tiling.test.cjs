@@ -14,4 +14,10 @@ const straight=G.tilePoints(800,600,{...s,tileStyle:'straight'},g);
 assert.equal(straight[0].y,straight[1].y);
 // Tile spacing must not shrink the watermarks as a single corner margin would.
 assert.equal(G.measure(ctx,800,600,{...s,spacing:0},null).bw,g.bw);
+// Logo gaps must follow the slider even below the text-specific minimum step.
+const logoSettings={...s,mode:'logo',size:15,spacing:4},logoG=G.measure(ctx,800,600,logoSettings,{width:200,height:100});
+const logoPoints=G.tilePoints(800,600,logoSettings,logoG);
+assert(Math.abs(Math.hypot(logoPoints[1].x-logoPoints[0].x,logoPoints[1].y-logoPoints[0].y)-(logoG.bw+24))<1e-8);
+const tightPoints=G.tilePoints(800,600,{...logoSettings,spacing:0},logoG);
+assert(Math.abs(Math.hypot(tightPoints[1].x-tightPoints[0].x,tightPoints[1].y-tightPoints[0].y)-logoG.bw)<1e-8);
 console.log('PASS: diagonal lattice, all-edge coverage, normalized preview/export positions, horizontal layout');

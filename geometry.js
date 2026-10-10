@@ -38,7 +38,7 @@
   }
   function tilePoints(w,h,s,g){
     const diagonal=s.tileStyle==='diagonal',rotation=diagonal?g.angle:0,cos=Math.cos(rotation),sin=Math.sin(rotation);
-    const gap=g.short*s.spacing/100,dx=Math.max((diagonal?g.bw:g.rw)+gap,g.fontSize*2),dy=Math.max((diagonal?g.bh:g.rh)+gap,g.fontSize*2);
+    const gap=g.short*s.spacing/100,minStep=s.mode==='logo'?1:g.fontSize*2,dx=Math.max((diagonal?g.bw:g.rw)+gap,minStep),dy=Math.max((diagonal?g.bh:g.rh)+gap,minStep);
     // Transform image corners into lattice coordinates to cover every edge.
     const corners=[[0,0],[w,0],[0,h],[w,h]].map(([x,y])=>({x:(x-w/2)*cos+(y-h/2)*sin,y:-(x-w/2)*sin+(y-h/2)*cos}));
     const left=Math.min(...corners.map(p=>p.x))-dx,right=Math.max(...corners.map(p=>p.x))+dx,top=Math.min(...corners.map(p=>p.y))-dy,bottom=Math.max(...corners.map(p=>p.y))+dy;
