@@ -6,8 +6,8 @@
   function getWorker(){
     if(!worker){
       worker=new Worker(new URL('subject-worker.js?v=9',document.baseURI),{type:'module'});
-      worker.onerror=()=>stop('识别模型无法加载，请检查网络后重试');
-      worker.onmessage=({data:r})=>{const p=pending.get(r.id);if(!p)return;if(r.status==='progress'){p.onProgress?.(r.message);return;}clearTimeout(p.timer);pending.delete(r.id);r.status==='done'?p.resolve(r):p.reject(new Error('识别失败，请重试或关闭自动避开主体：'+r.message));};
+      worker.onerror=()=>stop('识别模型无法加载，可检查网络重试或手动标记主体');
+      worker.onmessage=({data:r})=>{const p=pending.get(r.id);if(!p)return;if(r.status==='progress'){p.onProgress?.(r.message);return;}clearTimeout(p.timer);pending.delete(r.id);r.status==='done'?p.resolve(r):p.reject(new Error('自动识别失败，可手动标记主体：'+r.message));};
     }
     return worker;
   }
@@ -30,7 +30,7 @@
       const mc=mask.getContext('2d'),image=mc.createImageData(mask.width,mask.height);
       let count=0;
       for(let i=0;i<alpha.length;i++){const a=alpha[i]>=80?255:0;image.data[i*4+3]=a;count+=a>0;}
-      if(count<alpha.length*.001)throw new Error('未识别到主体，请重试或关闭自动避开主体');
+      if(count<alpha.length*.001)throw new Error('未识别到主体，可重试或手动标记主体');
       mc.putImageData(image,0,0);
       // Expand the protected contour slightly so antialiased marks do not touch it.
       const expanded=document.createElement('canvas');expanded.width=mask.width;expanded.height=mask.height;
@@ -41,5 +41,5 @@
     inflight.set(key,promise);try{return await promise;}finally{inflight.delete(key);}
   }
   function forget(key){cache.delete(key);}
-  root.SubjectProtection={identify,forget};
+  root.SubjectProtection={identify,forget,peek:key=>cache.get(key)||null};
 })(globalThis);
