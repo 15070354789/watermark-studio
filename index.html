@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="zh-CN">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#176b5a"><meta name="description" content="印记：在浏览器本地批量添加文字或 Logo 水印，实时预览、直接下载图片或 ZIP 打包。"><title>印记 · 批量图片水印</title><link rel="stylesheet" href="style.css?v=16"></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#176b5a"><meta name="description" content="印记：在浏览器本地批量添加文字或 Logo 水印，实时预览、直接下载图片或 ZIP 打包。"><title>印记 · 批量图片水印</title><link rel="stylesheet" href="style.css?v=17"></head>
 <body>
 <header class="topbar"><a class="brand" href="./"><span class="brand-icon">印</span><span>印记<small>WATERMARK STUDIO</small></span></a><div class="top-actions"><span class="private"><i></i> 图片仅在本地处理</span><button class="text-button" id="helpBtn">使用指南 <span>↗</span></button></div></header>
 <main>
@@ -27,5 +27,5 @@
 </main>
 <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 <dialog id="helpDialog"><button id="closeHelp" class="dialog-close" aria-label="关闭">×</button><div class="eyebrow">开始使用</div><h2>三步，为作品留下印记</h2><ol><li><strong>添加图片</strong><p>拖入或选择 JPG、PNG、WebP 图片，可分多次添加。单张不超过 4000 万像素。</p></li><li><strong>定制水印</strong><p>输入文字或上传 Logo，调整大小、透明度与位置。直接拖动预览中的水印，或输入位置百分比；方向键可微调。全图平铺支持斜铺；旋转角度可调整斜度。开启「自动避开主体」后逐张识别商品或人物，水印只铺在背景。识别失败时可点击「手动标记主体」，用画笔或框选保护主体，也可擦除自动识别错误的部分。手动区域仅对当前图片生效。绿色识别范围不会出现在导出的图片中。</p></li><li><strong>批量导出</strong><p>默认将全部图片作为独立文件下载，无需解压；也可选择 ZIP 打包。浏览器提示时请允许下载多个文件，或展开生成列表逐张下载。导出保留原始像素尺寸，文件名增加「_watermarked」。</p></li></ol><p class="help-footnote">图片与 Logo 只在当前浏览器内处理，刷新后需重新添加。保存的文字设置留在此浏览器。静态图片导出不保留 EXIF 信息。</p><button id="gotIt" class="primary">开始创作 →</button></dialog>
-<script src="zip.js?v=16"></script><script src="geometry.js?v=16"></script><script src="subject.js?v=16"></script><script src="manual-mask.js?v=16"></script><script src="app.js?v=16"></script>
+<script src="zip.js?v=17"></script><script src="geometry.js?v=17"></script><script src="subject.js?v=17"></script><script src="manual-mask.js?v=17"></script><script src="app.js?v=17"></script>
 </body></html>
