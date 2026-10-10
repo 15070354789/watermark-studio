@@ -2,6 +2,8 @@
 
 一个中文图片水印工具，支持文字和 Logo 水印、自由拖动、实时预览、批量下载。图片只在自己的浏览器里处理，无需注册，也无需上传服务器。
 
+**[直接打开网页版](https://15070354789.github.io/watermark-studio/)** · **[查看源码](https://github.com/15070354789/watermark-studio)**
+
 ## 使用
 
 1. 添加 JPG、PNG 或 WebP 图片，可拖入或分批选择。
