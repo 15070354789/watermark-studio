@@ -15,7 +15,7 @@
     }
     const angle=s.angle*Math.PI/180,cos=Math.abs(Math.cos(angle)),sin=Math.abs(Math.sin(angle));
     let rw=bw*cos+bh*sin,rh=bw*sin+bh*cos;
-    const margin=short*s.spacing/100,fit=Math.min(1,(w-2*margin)/rw,(h-2*margin)/rh);
+    const margin=s.tile?0:short*s.spacing/100,fit=Math.min(1,(w-2*margin)/rw,(h-2*margin)/rh);
     bw*=fit;bh*=fit;fontSize*=fit;rw*=fit;rh*=fit;
     let cx,cy;
     if(s.position==='custom'){
@@ -36,5 +36,18 @@
     }
     return right<0?null:{x:left,y:top,width:right-left+1,height:bottom-top+1};
   }
-  root.WatermarkGeometry={measure,clamp,alphaBounds};
+  function tilePoints(w,h,s,g){
+    const diagonal=s.tileStyle==='diagonal',rotation=diagonal?g.angle:0,cos=Math.cos(rotation),sin=Math.sin(rotation);
+    const gap=g.short*s.spacing/100,dx=Math.max((diagonal?g.bw:g.rw)+gap,g.fontSize*2),dy=Math.max((diagonal?g.bh:g.rh)+gap,g.fontSize*2);
+    // Transform image corners into lattice coordinates to cover every edge.
+    const corners=[[0,0],[w,0],[0,h],[w,h]].map(([x,y])=>({x:(x-w/2)*cos+(y-h/2)*sin,y:-(x-w/2)*sin+(y-h/2)*cos}));
+    const left=Math.min(...corners.map(p=>p.x))-dx,right=Math.max(...corners.map(p=>p.x))+dx,top=Math.min(...corners.map(p=>p.y))-dy,bottom=Math.max(...corners.map(p=>p.y))+dy;
+    const points=[];
+    for(let row=Math.floor(top/dy);row<=Math.ceil(bottom/dy);row++)for(let col=Math.floor(left/dx);col<=Math.ceil(right/dx);col++){
+      const x=(col+(Math.abs(row)%2)*.5)*dx,y=row*dy;
+      points.push({x:w/2+x*cos-y*sin,y:h/2+x*sin+y*cos});
+    }
+    return points;
+  }
+  root.WatermarkGeometry={measure,clamp,alphaBounds,tilePoints};
 })(typeof window!=='undefined'?window:globalThis);
